@@ -1,4 +1,4 @@
-import { ref, set, onValue, off } from 'firebase/database';
+import { ref, set, onValue, off, remove } from 'firebase/database';
 import { database } from './firebase';
 
 export interface BusLocation {
@@ -116,6 +116,17 @@ export class LocationService {
       await set(driverRef, driver);
     } catch (error) {
       console.error('Error saving driver:', error);
+      throw error;
+    }
+  }
+
+  // Delete driver from Firebase
+  async deleteDriver(driverId: string): Promise<void> {
+    try {
+      const driverRef = ref(database, `drivers/${driverId}`);
+      await remove(driverRef);
+    } catch (error) {
+      console.error('Error deleting driver:', error);
       throw error;
     }
   }

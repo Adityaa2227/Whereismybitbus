@@ -9,7 +9,7 @@ import {
   User, 
   Phone, 
   MapPin,
-  Navigation,
+  Navigation, Trash,
   CheckCircle
 } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -24,6 +24,18 @@ const DriverDashboard: React.FC = () => {
   const [newDriverNumber, setNewDriverNumber] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleDeleteDriver = async (driverId: string) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this driver?');
+    if (!confirmDelete) return;
+    try {
+      await locationService.deleteDriver(driverId);
+      if (selectedDriver?.id === driverId) setSelectedDriver(null);
+    } catch (err) {
+      console.error('Delete driver error:', err);
+      setError('Failed to delete driver');
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = locationService.subscribeToDrivers((driversList) => {
@@ -174,6 +186,10 @@ const DriverDashboard: React.FC = () => {
                             {driver.number}
                           </p>
                         </div>
+                        <button onClick={() => handleDeleteDriver(driver.id)} title="Delete driver"
+                          className="text-red-500 hover:text-red-600 transition-colors">
+                          <Trash className="w-5 h-5" />
+                        </button>
                         {selectedDriver?.id === driver.id && (
                           <CheckCircle className="w-5 h-5 text-blue-500" />
                         )}

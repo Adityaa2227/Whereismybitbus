@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
 import { logoutUser } from '../services/authService';
 import { locationService, BusLocation } from '../services/locationService';
-import { Phone, MessageCircle, LogOut, MapPin, Clock, User } from 'lucide-react';
+import { Phone, LogOut, MapPin, Clock, User } from 'lucide-react';
 import BusMap from '../components/BusMap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Footer from '../components/Footer';
@@ -10,11 +11,37 @@ const StudentDashboard: React.FC = () => {
   const [busLocation, setBusLocation] = useState<BusLocation | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
+  const [address, setAddress] = useState<string>('Fetching address…');
+  const prevCoordsRef = React.useRef<{lat:number;lng:number}|null>(null);
+
+  useEffect(() => {
+    // ask for notification permission once
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = locationService.subscribeToLocationUpdates((location) => {
       setBusLocation(location);
       setLastUpdated(Date.now());
+
+      // If coordinates actually changed, fetch address and notify.
+      if (!prevCoordsRef.current || prevCoordsRef.current.lat !== location.latitude || prevCoordsRef.current.lng !== location.longitude) {
+        prevCoordsRef.current = { lat: location.latitude, lng: location.longitude };
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${location.latitude}&lon=${location.longitude}&format=json`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.display_name) {
+              setAddress(data.display_name);
+              toast.success(`Bus moved to: ${data.display_name}`);
+            }
+          })
+          .catch(err => {
+            console.error('Reverse geocode error', err);
+            setAddress('Address unavailable');
+          });
+      }
     });
 
     // Show the map even if no location data has arrived yet
@@ -47,15 +74,9 @@ const StudentDashboard: React.FC = () => {
     }
   };
 
-  const handleWhatsAppDriver = () => {
-    if (busLocation?.driverNumber) {
-      const message = encodeURIComponent('Hi, I am a student tracking the bus. Could you please provide an update?');
-      window.open(`https://wa.me/${busLocation.driverNumber.replace(/[^0-9]/g, '')}?text=${message}`);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col">
+      <Toaster position="top-right" />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -131,22 +152,18 @@ const StudentDashboard: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Contact Buttons */}
-                    <div className="pt-4 space-y-3">
+                    {address && (
+                      <p className="text-xs text-gray-700 mt-1 line-clamp-2">{address}</p>
+                    )}
+
+                    {/* Contact Button */}
+                    <div className="pt-4">
                       <button
                         onClick={handleCallDriver}
                         className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center space-x-2 shadow-lg"
                       >
                         <Phone className="w-5 h-5" />
                         <span>Call Driver</span>
-                      </button>
-                      
-                      <button
-                        onClick={handleWhatsAppDriver}
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center space-x-2 shadow-lg"
-                      >
-                        <MessageCircle className="w-5 h-5" />
-                        <span>WhatsApp</span>
                       </button>
                     </div>
                   </div>
