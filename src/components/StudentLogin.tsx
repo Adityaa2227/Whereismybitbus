@@ -26,22 +26,40 @@ const StudentLogin: React.FC<StudentLoginProps> = ({ onLogin }) => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-8 shadow-xl border border-white/20">
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full mb-4 shadow-lg">
           <GraduationCap className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Student Login</h2>
+=======
+    <div className="p-8 border shadow-xl bg-white/80 backdrop-blur-lg rounded-2xl border-white/20">
+      <div className="mb-8 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-blue-500 rounded-full shadow-lg">
+          <GraduationCap className="w-8 h-8 text-white" />
+        </div>
+        <h2 className="mb-2 text-2xl font-bold text-gray-900">Student Login</h2>
+>>>>>>> 98f6374 (inital commit)
         <p className="text-gray-600">Sign in with your BIT Mesra Google account</p>
       </div>
 
       {/* Email Format Requirements */}
+<<<<<<< HEAD
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
         <div className="flex items-start space-x-3">
           <Shield className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
           <div>
             <h3 className="text-sm font-semibold text-blue-800 mb-2">Required Email Format</h3>
             <div className="text-sm text-blue-700 space-y-1">
+=======
+      <div className="p-4 mb-6 border border-blue-200 rounded-lg bg-blue-50">
+        <div className="flex items-start space-x-3">
+          <Shield className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+          <div>
+            <h3 className="mb-2 text-sm font-semibold text-blue-800">Required Email Format</h3>
+            <div className="space-y-1 text-sm text-blue-700">
+>>>>>>> 98f6374 (inital commit)
               <p><strong>Format:</strong> btechXXXXX.YY@bitmesra.ac.in</p>
               <p><strong>Example:</strong> btech15011.23@bitmesra.ac.in</p>
               <div className="mt-2 text-xs">
@@ -54,11 +72,19 @@ const StudentLogin: React.FC<StudentLoginProps> = ({ onLogin }) => {
       </div>
 
       {error && (
+<<<<<<< HEAD
         <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
           <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
           <div>
             <p className="text-red-600 text-sm font-medium">Authentication Failed</p>
             <p className="text-red-600 text-sm mt-1">{error}</p>
+=======
+        <div className="flex items-start p-4 mb-6 space-x-3 border border-red-200 rounded-lg bg-red-50">
+          <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-red-600">Authentication Failed</p>
+            <p className="mt-1 text-sm text-red-600">{error}</p>
+>>>>>>> 98f6374 (inital commit)
           </div>
         </div>
       )}
@@ -80,12 +106,21 @@ const StudentLogin: React.FC<StudentLoginProps> = ({ onLogin }) => {
       </button>
 
       {/* Security Features */}
+<<<<<<< HEAD
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
         <div className="flex items-start space-x-3">
           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
           <div>
             <h3 className="text-sm font-semibold text-green-800 mb-2">Secure Authentication</h3>
             <ul className="text-sm text-green-700 space-y-1">
+=======
+      <div className="p-4 mb-6 border border-green-200 rounded-lg bg-green-50">
+        <div className="flex items-start space-x-3">
+          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+          <div>
+            <h3 className="mb-2 text-sm font-semibold text-green-800">Secure Authentication</h3>
+            <ul className="space-y-1 text-sm text-green-700">
+>>>>>>> 98f6374 (inital commit)
               <li>• Automatic email domain verification</li>
               <li>• Student information extraction</li>
               <li>• Secure session management</li>
@@ -96,7 +131,11 @@ const StudentLogin: React.FC<StudentLoginProps> = ({ onLogin }) => {
       </div>
 
       {/* Instructions */}
+<<<<<<< HEAD
       <div className="text-center text-sm text-gray-600 space-y-2">
+=======
+      <div className="space-y-2 text-sm text-center text-gray-600">
+>>>>>>> 98f6374 (inital commit)
         <p>
           <strong>Important:</strong> You must use your official BIT Mesra Google account
         </p>
@@ -105,6 +144,7 @@ const StudentLogin: React.FC<StudentLoginProps> = ({ onLogin }) => {
         </p>
       </div>
 
+<<<<<<< HEAD
       {/* Demo Information */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <p className="text-center text-sm text-gray-600 mb-3">Demo Information</p>
@@ -114,6 +154,9 @@ const StudentLogin: React.FC<StudentLoginProps> = ({ onLogin }) => {
           <p className="text-xs text-gray-500 mt-1">{DEMO_ACCOUNTS.student.note}</p>
         </div>
       </div>
+=======
+     
+>>>>>>> 98f6374 (inital commit)
     </div>
   );
 };
