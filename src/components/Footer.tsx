@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
           <ul className="space-y-2">
             <li>
               <a
-                href="https://bitvalut.com"
+                href="https://bitp-vault.netlify.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-blue-600"
